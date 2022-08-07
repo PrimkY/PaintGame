@@ -1,16 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
+// eslint-disable-next-line import/extensions,import/no-unresolved
+import MainLayout from './Layouts/MainLayout';
+// eslint-disable-next-line import/no-unresolved,import/extensions
+import Rooms from './Components/Rooms';
+// eslint-disable-next-line import/extensions,import/no-unresolved
+import Game from './Components/Game';
 
-const App = () => {
-    console.log('hello');
-    const arrayOfSmth = [{name:'Ivanko', surname: '', id:1}];
-    arrayOfSmth.push({name:'Karinko', surname: '', id:2});
-    return arrayOfSmth.map((item) => {
-        return (
-            <div key={arrayOfSmth.id}>
-                {item.name}
-            </div>
-        );
-    })
+import styled from 'styled-components';
+
+const StyledMainContent = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+function App() {
+
+
+  return (
+    <div>
+      <MainLayout/>
+      <StyledMainContent>
+        <Rooms/>
+        <Game/>
+      </StyledMainContent>
+    </div>
+  );
 }
-
 export default App;
