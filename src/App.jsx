@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-// eslint-disable-next-line import/extensions,import/no-unresolved
-import MainLayout from './Layouts/MainLayout';
-// eslint-disable-next-line import/no-unresolved,import/extensions
-import Rooms from './Components/Rooms';
-// eslint-disable-next-line import/extensions,import/no-unresolved
-import Game from './Components/Game';
-
 import styled from 'styled-components';
+// eslint-disable-next-line import/extensions,import/no-unresolved
+import GlobalThemeWrapper from './HOC/GlobalThemeWrapper';
+// eslint-disable-next-line import/extensions,import/no-unresolved
+import RootRouter from './Routes/RootRouter';
+import { BrowserRouter } from 'react-router-dom';
 
 const StyledMainContent = styled.div`
   display: flex;
@@ -18,13 +16,11 @@ function App() {
 
 
   return (
-    <div>
-      <MainLayout/>
-      <StyledMainContent>
-        <Rooms/>
-        <Game/>
-      </StyledMainContent>
-    </div>
+    <BrowserRouter>
+      <GlobalThemeWrapper>
+        <RootRouter/>
+      </GlobalThemeWrapper>
+    </BrowserRouter>
   );
 }
 export default App;

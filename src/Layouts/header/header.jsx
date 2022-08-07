@@ -6,7 +6,7 @@ const StyledHeaderItems = styled.header`
   padding-top: 30px;
   width: 100%;
   height: 50px;
-  background-color: aquamarine;
+  background-color: ${ props => props.theme.lightGreenColor };
 `;
 
 const StyledList = styled.ul`
@@ -15,7 +15,7 @@ const StyledList = styled.ul`
   justify-content: space-around;
 `;
 
-const Header = () => {
+const Header = (props) => {
   return (
     <StyledHeaderItems>
       <header>

@@ -1,32 +1,15 @@
 import React from 'react';
-import styled, { ThemeProvider } from 'styled-components';
+import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
 
-class GlobalThemeProvider extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      theme: 'dark',
-    };
-  }
-
-  themeSwitch() {
-    this.setState((state) => {return { theme: state.theme === 'dark' ? 'light' : 'dark' };});
-  }
-
-
-
-  render() {
-    const theme = {
-      missedColor: this.state.theme === 'dark' ? 'red' : 'lightRed',
-    };
-
-    return (
-      <ThemeProvider theme={{ heavyYellowColor: 'blue' }}>
-        {this.props.children}
+const GlobalThemeWrapper = (props) => {
+  return (
+    <React.Fragment>
+      {/* eslint-disable-next-line max-len */}
+      <ThemeProvider theme={{ lightGreenColor: 'aquamarine', baseBackgroundColor: 'skyblue', loginPageBackground: 'bisque' }}>
+        {props.children}
       </ThemeProvider>
-    );
-  }
-}
+    </React.Fragment>
+  );
+};
 
-export default GlobalThemeProvider;
+export default GlobalThemeWrapper;

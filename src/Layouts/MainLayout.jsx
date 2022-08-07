@@ -6,18 +6,18 @@ import Footer from './footer/footer';
 import styled from 'styled-components';
 
 const StyledMainLayout = styled.div`
-  background-color: ${props => props.theme.heavyYellowColor};
+  background-color: ${props => props.theme.baseBackgroundColor};
 `;
 
 const MainLayout = (props) => {
   return (
-    <div>
+    <StyledMainLayout>
       <Header/>
       <div className={'content'}>
         {props.children}
       </div>
       <Footer/>
-    </div>
+    </StyledMainLayout>
   );
 };
 
