@@ -24,7 +24,7 @@ const Header = (props) => {
           <div>Score Board</div>
         <div className={'login'}>
           <ul>
-            <li>Log in/Log out</li>
+            <li>Sign in/Sign up</li>
 
           </ul>
         </div>

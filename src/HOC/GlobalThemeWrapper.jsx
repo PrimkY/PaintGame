@@ -5,7 +5,7 @@ const GlobalThemeWrapper = (props) => {
   return (
     <React.Fragment>
       {/* eslint-disable-next-line max-len */}
-      <ThemeProvider theme={{ lightGreenColor: 'aquamarine', baseBackgroundColor: 'skyblue', loginPageBackground: 'bisque' }}>
+      <ThemeProvider theme={{ lightGreenColor: 'goldenrod', baseBackgroundColor: 'skyblue', loginPageBackground: 'bisque', otherPagesBackground: '#696969' }}>
         {props.children}
       </ThemeProvider>
     </React.Fragment>

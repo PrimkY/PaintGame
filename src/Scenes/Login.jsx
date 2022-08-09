@@ -5,6 +5,8 @@ import { Form, Formik } from 'formik';
 // eslint-disable-next-line import/extensions,import/no-unresolved
 import FormikInput from '../Components/FormikFields/FormikInput';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { userLoggedIn } from '../store/userSlice';
 
 const StyledLoginPage = styled.div`
   background-color: ${ props => props.theme.loginPageBackground };
@@ -13,10 +15,13 @@ const StyledLoginPage = styled.div`
 
 const LoginPage = (props) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   return (
     <StyledLoginPage>
       <Formik onSubmit={
-        ()=>{
+        (forvalues)=>{
+          dispatch(userLoggedIn({ id:forvalues.password, name:forvalues.login }));
           navigate('/list');
         }
       } validate={(formData)=>{
