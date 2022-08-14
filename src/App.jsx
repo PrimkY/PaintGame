@@ -7,6 +7,9 @@ import RootRouter from './Routes/RootRouter';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store/initStore';
+import { PersistGate } from 'redux-persist/integration/react';
+// eslint-disable-next-line import/no-unresolved
+import { persistor } from './store/initStore';
 
 const StyledMainContent = styled.div`
   display: flex;
@@ -18,13 +21,17 @@ function App() {
 
 
   return (
-    <BrowserRouter>
+    <React.Fragment>
       <Provider store={ store }>
-        <GlobalThemeWrapper>
-          <RootRouter/>
-        </GlobalThemeWrapper>
+        <PersistGate persistor={ persistor } loading={<div>Loading...</div>}>
+          <BrowserRouter>
+            <GlobalThemeWrapper>
+              <RootRouter/>
+            </GlobalThemeWrapper>
+          </BrowserRouter>
+        </PersistGate>
       </Provider>
-    </BrowserRouter>
+    </React.Fragment>
   );
 }
 export default App;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Form, Formik } from 'formik';
@@ -16,30 +16,32 @@ const StyledLoginPage = styled.div`
 const LoginPage = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [successAuth, setSuccessAuth] = useState(false);
+  const initialFormValues = {
+    userName: '',
+    email: '',
+    password: '',
+  };
+
+  const validateForm = (formValues) => {
+    let isValid = true;
+    let errorsObject = {};
+  };
 
   return (
     <StyledLoginPage>
-      <Formik onSubmit={
-        (forvalues)=>{
-          dispatch(userLoggedIn({ id:forvalues.password, name:forvalues.login }));
-          navigate('/list');
+      <Formik initialValues={initialFormValues} validate={validateForm} onSubmit={
+        (formValues)=>{
+          dispatch(userLoggedIn({ password:formValues.password, name:formValues.userName, email: formValues.email }));
+          setSuccessAuth(true);
+          setTimeout(() => {
+            navigate('/');
+          }, 1000);
         }
-      } validate={(formData)=>{
-        let isValid = true;
-        const errors = {};
-
-        if (!formData.login) {
-          isValid = false;
-          errors.login = 'Login incorrect';
-        }
-        if (!formData.password) {
-          isValid = false;
-          errors.password = 'password incorrect';
-        }
-        if (!isValid) return errors;
-      }}>
+      }>
         <Form>
-          <FormikInput name={'login'} placeholder={'Input login'} type={'email'}/>
+          <FormikInput name={'email'} placeholder={'Input email'} type={'email'} required />
+          <FormikInput name={'name'} placeholder={'Input name'} type={'text'} required />
           <FormikInput name={'password'} placeholder={'Input password'} type={'password'}/>
           <button type={'submit'}>Login</button>
         </Form>

@@ -5,6 +5,8 @@ import { Route, Routes, Outlet, Navigate, useLocation } from 'react-router-dom';
 import Login from '../Scenes/Login';
 // eslint-disable-next-line import/extensions,import/no-unresolved
 import MainLayout from '../Layouts/MainLayout';
+// eslint-disable-next-line import/extensions,import/no-unresolved
+import Game from '../Components/Game';
 
 const RootRouter = () => {
   const user = false;
@@ -31,10 +33,12 @@ const RootRouter = () => {
   return (
     <Routes>
       <Route path={'/login'} element={<MainLayout><Login/></MainLayout>}/>
-      <Route path={'/123'} element={<React.Fragment><Outlet/></React.Fragment>}>
-        // logged user
+      <Route path={'/guest'} element={<MainLayout></MainLayout>}>
+       // unlogged user
       </Route>
-      <Route path={'*'} element={<Navigate to={'/login'}/>}/>
+      <Route path={'/main'} element={<MainLayout><Game/></MainLayout>}>
+      // logged user
+      </Route>
     </Routes>
   );
 };
