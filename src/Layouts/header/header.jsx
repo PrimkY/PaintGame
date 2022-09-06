@@ -3,13 +3,13 @@ import styled from 'styled-components';
 
 
 const StyledHeaderItems = styled.header`
-  padding-top: 30px;
   width: 100%;
-  height: 50px;
+  height: 10vh;
   background-color: ${ props => props.theme.lightGreenColor };
 `;
 
 const StyledList = styled.ul`
+  padding-top: 30px;
   display: flex;
   align-items: center;
   justify-content: space-around;

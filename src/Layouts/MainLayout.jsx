@@ -9,13 +9,17 @@ const StyledMainLayout = styled.div`
   background-color: ${props => props.theme.baseBackgroundColor};
 `;
 
+const ContentDiv = styled.div`
+  display: flex;
+`;
+
 const MainLayout = (props) => {
   return (
     <StyledMainLayout>
       <Header/>
-      <div className={'content'}>
+      <ContentDiv>
         {props.children}
-      </div>
+      </ContentDiv>
       <Footer/>
     </StyledMainLayout>
   );

@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Form, Formik } from 'formik';
 // eslint-disable-next-line import/extensions,import/no-unresolved
-import FormikInput from '../Components/FormikFields/FormikInput';
+import FormikInput from '../../Components/FormikFields/FormikInput';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { userLoggedIn } from '../store/userSlice';
+import { userLoggedIn } from '../../store/userSlice';
 
 const StyledLoginPage = styled.div`
   background-color: ${ props => props.theme.loginPageBackground };

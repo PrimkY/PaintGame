@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Route, Routes, Outlet, Navigate, useLocation } from 'react-router-dom';
 // eslint-disable-next-line import/extensions,import/no-unresolved
-import Login from '../Scenes/Login';
+import Login from '../Scenes/Login/Login';
 // eslint-disable-next-line import/extensions,import/no-unresolved
 import MainLayout from '../Layouts/MainLayout';
 // eslint-disable-next-line import/extensions,import/no-unresolved
 import Game from '../Components/Game';
+// eslint-disable-next-line import/extensions,import/no-unresolved
+import Rooms from '../Components/Rooms';
 
 const RootRouter = () => {
   const user = false;
@@ -36,7 +38,7 @@ const RootRouter = () => {
       <Route path={'/guest'} element={<MainLayout></MainLayout>}>
        // unlogged user
       </Route>
-      <Route path={'/main'} element={<MainLayout><Game/></MainLayout>}>
+      <Route path={'/main'} element={<MainLayout><Rooms/><Game/></MainLayout>}>
       // logged user
       </Route>
     </Routes>

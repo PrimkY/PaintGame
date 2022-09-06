@@ -2,11 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledGame = styled.div`
-  margin: 1%;
-  border: 2px solid black;
-  width: 100%;
-  height: 100%;
-  min-height: 600px;
+  width: 70vw;
+  right: 0;
+  height: 85vh;
 `;
 
 const Game = () => {
