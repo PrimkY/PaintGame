@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-
+// eslint-disable-next-line import/named
+import { Route, Routes, Outlet, Navigate, useLocation, useNavigate } from 'react-router-dom';
 
 const StyledHeaderItems = styled.header`
   width: 100%;
@@ -16,6 +17,7 @@ const StyledList = styled.ul`
 `;
 
 const Header = (props) => {
+  const navigate = useNavigate();
   return (
     <StyledHeaderItems>
       <header>
@@ -23,10 +25,7 @@ const Header = (props) => {
         <div className={'logo'}>logo</div>
           <div>Score Board</div>
         <div className={'login'}>
-          <ul>
-            <li>Sign in/Sign up</li>
-
-          </ul>
+         <div onClick={()=> navigate('/login') }>Sign in/Sign up</div>
         </div>
         </StyledList>
       </header>

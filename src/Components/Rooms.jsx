@@ -18,6 +18,9 @@ const Rooms = (props) => {
   return (
     <StyledRoomElem>
       <div className='rooms'>
+        <strong>
+          Room list
+        </strong>
         <div className='room_name'>
           <strong>RoomName</strong>
           <div>

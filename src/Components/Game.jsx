@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+// eslint-disable-next-line import/extensions,import/no-unresolved
+import Tiktaktoe from './Games/Tik-tak-toe/tiktaktoe';
 
 const StyledGame = styled.div`
-  width: 70vw;
+  width: 100%;
   right: 0;
   height: 85vh;
 `;
@@ -11,7 +13,7 @@ const Game = () => {
   return (
     <StyledGame>
       <div>
-        game board
+        <Tiktaktoe/>
       </div>
     </StyledGame>
   );
