@@ -1,0 +1,95 @@
+.turn {
+  background-color: #3498db;
+  box-shadow: 0 0 40px 40px #3498db inset, 0 0 0 0 #3498db;
+  width: 130px;
+  height: 60px;
+  border-radius: 0.6em;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.start_div {
+  width: 80%;
+  padding-top: 20px;
+  padding-left: 10vw;
+  display: flex;
+  justify-content: space-between;
+}
+
+.end_div {
+  width: 80%;
+  padding-top: 20px;
+  padding-left: 10vw;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+ul {
+  padding-top: 100px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 60%;
+  height: 60%;
+  li{
+    flex: 1 1 calc((100% / 3) - 2rem);
+    height: 100px;
+    border: 1px solid gray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+button {
+  width: 80px;
+  height: 80px;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  border: 2px solid #e74c3c;
+  border-radius: 0.6em;
+  color: #e74c3c;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1;
+  text-decoration: none;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  border-color: #3498db;
+  color: #fff;
+  box-shadow: 0 0 40px 40px #3498db inset, 0 0 0 0 #3498db;
+  -webkit-transition: all 150ms ease-in-out;
+  transition: all 150ms ease-in-out;
+}
+button:hover, button:focus {
+  color: #fff;
+  outline: 0;
+}
+
+  button:hover {
+    box-shadow: 0 0 10px 0 #3498db inset, 0 0 10px 4px #3498db;
+  }

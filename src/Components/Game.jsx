@@ -12,9 +12,7 @@ const StyledGame = styled.div`
 const Game = () => {
   return (
     <StyledGame>
-      <div>
-        <Tiktaktoe/>
-      </div>
+     <Tiktaktoe/>
     </StyledGame>
   );
 };
