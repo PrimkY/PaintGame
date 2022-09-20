@@ -1,0 +1,23 @@
+{
+  "user": [
+    { "id": 1,
+      "name": "noblesse",
+      "email": "qwe@gmail.com",
+      "password": "noblesse",
+      "score":
+        {"tiktaktoe": 1,
+          "chess": 1
+        }
+    },
+    { "id": 2, "name": "", "email": "",
+      "score":
+        {"tiktaktoe": 11,
+          "chess": 11
+        }
+    }
+  ],
+  "comments": [
+    { "id": 1, "body": "some comment", "postId": 1 }
+  ],
+  "profile": { "name": "typicode" }
+}

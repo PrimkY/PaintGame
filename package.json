@@ -1,13 +1,14 @@
 {
   "name": "Paint-game",
   "version": "1.0.0",
-  "description": "First steps into TS",
+  "description": "First steps into react",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "lint": "eslint src",
-    "dev": "webpack serve --env development"
+    "dev": "webpack serve --env development",
+    "server": "json-server ./fakeServer/db.json -m ./node_modules/json-server-auth --port 8000"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,7 @@
     "@babel/preset-env": "^7.18.2",
     "@babel/preset-react": "^7.17.12",
     "@babel/preset-typescript": "^7.17.12",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
     "@typescript-eslint/eslint-plugin": "^5.28.0",
     "@typescript-eslint/parser": "^5.28.0",
     "babel-loader": "^8.2.5",
@@ -37,6 +39,8 @@
     "eslint-webpack-plugin": "^3.1.1",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.6.1",
+    "nodemon": "^2.0.20",
+    "react-refresh": "^0.14.0",
     "sass": "^1.52.3",
     "sass-loader": "^13.0.0",
     "style-loader": "^3.3.1",
@@ -45,15 +49,19 @@
     "webpack": "^5.73.0",
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.9.2",
-    "xml-loader": "^1.2.1",
-    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
-    "react-refresh": "^0.14.0"
+    "xml-loader": "^1.2.1"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.3",
     "axios": "^0.27.2",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.2",
+    "express": "^4.18.1",
     "formik": "^2.2.9",
     "html-webpack-plugin": "^5.5.0",
+    "json-server-auth": "^2.1.0",
+    "lowdb": "^3.0.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

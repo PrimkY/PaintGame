@@ -9,6 +9,8 @@ import { useDispatch } from 'react-redux';
 import { userLoggedIn } from '../../store/userSlice';
 // eslint-disable-next-line import/no-unresolved
 import './login.scss';
+import axios from "axios";
+import { fetchUsers } from "../../API/userAPI"
 
 const StyledLoginPage = styled.div`
   background-color: ${ props => props.theme.loginPageBackground };
@@ -42,6 +44,19 @@ const LoginPage = (props) => {
     <StyledLoginPage>
       <Formik initialValues={initialFormValues} validate={validateForm} onSubmit={
         (formValues)=>{
+          axios.post(`http://localhost:8000/${auth ? 'login' : 'users'}`, {
+            id: formValues.id,
+            name: formValues.name,
+            email: formValues.email,
+            password: formValues.password,
+            score: formValues.score,
+          }).then(()=>{
+            fetchUsers().then(response => {
+              const findUser = response.data.find((mail) => mail.email === formValues.email);
+              dispatch({type: 'userLogIn', payload: {name: auth ? findUser.name : formValues.name, password: formValues.password, id: auth ? findUser.id : formValues.id}});
+              navigate('/');
+            })
+          });
           dispatch({ type: 'userLoggedIn', payload: { password:formValues.password, name:formValues.userName, email: formValues.email } });
           setAuth(true);
           setTimeout(() => {
