@@ -6,10 +6,8 @@ import GlobalThemeWrapper from './HOC/GlobalThemeWrapper';
 import RootRouter from './Routes/RootRouter';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { store } from './store/initStore';
+import { persistor, store } from './store/initStore';
 import { PersistGate } from 'redux-persist/integration/react';
-// eslint-disable-next-line import/no-unresolved
-import { persistor } from './store/initStore';
 
 const StyledMainContent = styled.div`
   display: flex;
@@ -22,15 +20,15 @@ function App() {
 
   return (
     <React.Fragment>
-      <Provider store={ store }>
-        <PersistGate persistor={ persistor } loading={<div>Loading...</div>}>
-          <BrowserRouter>
+      <BrowserRouter>
+        <Provider store={ store }>
+          <PersistGate loading={null} persistor={persistor}>
             <GlobalThemeWrapper>
               <RootRouter/>
             </GlobalThemeWrapper>
-          </BrowserRouter>
-        </PersistGate>
-      </Provider>
+          </PersistGate>
+        </Provider>
+      </BrowserRouter>
     </React.Fragment>
   );
 }

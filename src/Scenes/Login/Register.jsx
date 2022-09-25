@@ -1,17 +1,17 @@
 import React from 'react'
 import {useDispatch} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { setUser } from '../../store/userSlice';
 import Form from '/src/Components/Form/Form';
 
-const LogIn = () => {
+const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleLogin = (email, password) => {
+  const handleRegister = (email, password) => {
     const auth = getAuth();
-    signInWithEmailAndPassword(auth, email, password)
+    createUserWithEmailAndPassword(auth, email, password)
       .then(({user}) => {
         console.log(user);
         dispatch(setUser({
@@ -20,17 +20,17 @@ const LogIn = () => {
           id: user.uid,
           token: user.accessToken,
         }));
-        navigate('/profile');
+        navigate('/game');
       })
-      .catch(() => alert('You should register first)'))
+      .catch(console.error)
   }
 
-  return (
+   return (
       <Form
-        title='login'
-        handleClick={handleLogin}
+        title='register'
+        handleClick={handleRegister}
       />
   )
 }
 
-export default LogIn
+export default SignUp

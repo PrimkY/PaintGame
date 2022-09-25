@@ -1,52 +1,30 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { Route, Routes, Outlet, Navigate, useLocation } from 'react-router-dom';
-// eslint-disable-next-line import/extensions,import/no-unresolved
-import Login from '../Scenes/Login/Login';
-// eslint-disable-next-line import/extensions,import/no-unresolved
-import MainLayout from '../Layouts/MainLayout';
-// eslint-disable-next-line import/extensions,import/no-unresolved
-import Game from '../Components/Game';
-// eslint-disable-next-line import/extensions,import/no-unresolved
-import Rooms from '../Components/Rooms';
-// eslint-disable-next-line import/extensions,import/no-unresolved
-import Roommates from '../Components/Roommates';
+import React from 'react';
+import {Route, Routes, Navigate} from 'react-router-dom';
+import LoginPage from "../Scenes/Login/LoginPage";
+import Profile from "../Scenes/Profile/Profile";
+import MainLayout from "../Layouts/MainLayout";
+import Score from "../Scenes/Score/score";
+import RegisterPage from "../Scenes/Login/RegisterPage";
+import {useAuth} from "../hooks/use-auth";
+import HomePage from "../Components/HomePage";
 
-const RootRouter = () => {
-  const user = false;
-  const [redirectLocation, setRedirectLocation] = useState();
-  const { location } = useLocation();
+  const RootRouter = () => {
+    const {isAuth, email} = useAuth();
 
-  // const renderForGuestUser = (Scene) => {
-  //   if (!user) {
-  //     return <Scene/>;
-  //   } else {
-  //     return <Navigate to={ redirectLocation || '/main'}/>;
-  //   }
-  // };
-  //
-  // const renderForLoggedUser = (Scene) => {
-  //   if (!user) {
-  //     return Scene;
-  //   } else {
-  //     setRedirectLocation(location);
-  //     return <Navigate to={'/guest'}/>;
-  //   }
-  // };
-
-  return (
-    <Routes>
-      <Route path={'/login'} element={<Login/>}/>
-      <Route path={'/guest'} element={<MainLayout><Game/></MainLayout>}>
-       {/*unlogged user*/}
-      </Route>
-      <Route path={'/'} element={<MainLayout><Rooms/><Game/></MainLayout>}>
-      {/*logged user*/}
-      </Route>
-    </Routes>
-  );
-};
-
-RootRouter.propTypes = {};
+    return isAuth ?(
+      <Routes>
+        <Route key={'home'} path={'/home'} element={<HomePage/>}/>
+        <Route key={'profile'} path={'/profile'} element={<MainLayout><Profile/></MainLayout>}/>
+        <Route key={'score'} path={'/score'} element={<MainLayout><Score/></MainLayout>}/>
+        <Route path='*' element={<Navigate to={'/home'} replace/>}/>
+      </Routes>
+      ) : (
+      <Routes>
+        <Route key={'login'} path={'/login'} element={<LoginPage/>}/>
+        <Route key={'register'} path={'/register'} element={<RegisterPage/>}/>
+        <Route path='*' element={<Navigate to={'/login'} replace/>}/>
+      </Routes>
+    );
+  }
 
 export default RootRouter;
