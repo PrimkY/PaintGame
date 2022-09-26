@@ -20,7 +20,7 @@ const SignUp = () => {
           id: user.uid,
           token: user.accessToken,
         }));
-        navigate('/game');
+        navigate('/home');
       })
       .catch(console.error)
   }

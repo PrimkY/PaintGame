@@ -26,11 +26,14 @@ const Navbar = () => {
           {isAuth ?
             <StyledNav>
               <Button variant={"outlined"} color={"secondary"} onClick={()=> {navigate('/profile')}}>Profile</Button>
-              <Button variant={"outlined"} color={"secondary"} onClick={()=> {navigate('/home')}}>Home</Button>
+              <Button variant={"outlined"} color={"secondary"} onClick={()=> {navigate('/score')}}>Score</Button>
               <Button variant={"outlined"} color={"secondary"} onClick={()=> {dispatch(removeUser())}}>Log Out</Button>
             </StyledNav>
           :
-            <Button variant={"outlined"} color={"secondary"}>Log In</Button>}
+            <StyledNav>
+              <Button variant={"outlined"} color={"secondary"} onClick={()=> {navigate('/login')}}>Log In</Button>
+            </StyledNav>
+          }
       </div>
 
   );

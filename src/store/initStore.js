@@ -9,6 +9,7 @@ const rootReducer = combineReducers({user: userSlice,})
 
 const persistConfig = {
   key: 'root',
+  version: 1,
   storage,
   stateReconciler: hardSet,
 }

@@ -1,213 +1,269 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React from 'react'
+import { useEffect, useState } from 'react';
+import styled from "styled-components";
 
-const StyledTicTakToe = styled.div`
-  .turn {
-    background-color: #3498db;
-    box-shadow: 0 0 40px 40px #3498db inset, 0 0 0 0 #3498db;
-    width: 130px;
-    height: 60px;
-    border-radius: 0.6em;
+import io from 'socket.io-client';
+//const socket = io(process.env.REACT_APP_WS_SERVER);
+
+const StyledTikTakToe = styled.div`
+  .container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .box {
+    width: 5rem;
+    height: 5rem;
+    border: 1px solid #000;
+    margin-right: -1px;
+    margin-top: -1px;
     text-align: center;
-    text-transform: uppercase;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    color: #fff;
+    line-height: 4.5rem;
+    font-size: 3rem;
+    font-weight: bold;
+  }
+
+  .row {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
   }
 
-  .start_div {
-    width: 80%;
-    padding-top: 20px;
-    padding-left: 10vw;
-    display: flex;
-    justify-content: space-between;
+  .reset-btn {
+    float: right;
   }
-
-  .end_div {
-    width: 80%;
-    padding-top: 20px;
-    padding-left: 10vw;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-  }
-
-  ul {
-    padding-top: 100px;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    width: 60%;
-    height: 60%;
-    li{
-      flex: 1 1 calc((100% / 3) - 2rem);
-      height: 100px;
-      border: 1px solid gray;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  }
-
-  button {
-    width: 80px;
-    height: 80px;
-    box-sizing: border-box;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-color: transparent;
-    border: 2px solid #e74c3c;
-    border-radius: 0.6em;
-    color: #e74c3c;
-    cursor: pointer;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    -webkit-align-self: center;
-    -ms-flex-item-align: center;
-    align-self: center;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1;
-    text-decoration: none;
-    text-align: center;
-    text-transform: uppercase;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    border-color: #3498db;
-    color: #fff;
-    box-shadow: 0 0 40px 40px #3498db inset, 0 0 0 0 #3498db;
-    -webkit-transition: all 150ms ease-in-out;
-    transition: all 150ms ease-in-out;
-  }
-  button:hover, button:focus {
-    color: #fff;
-    outline: 0;
-  }
-
-  button:hover {
-    box-shadow: 0 0 10px 0 #3498db inset, 0 0 10px 4px #3498db;
-  }
-
 `;
 
-const Tiktaktoe = () => {
-  const [turn, setTurn] = useState('');
-  const [cells, setCells] = useState(Array(9).fill(''));
-  const [winner, setWinner] = useState('');
+function TikTakToe() {
+const [game, setGame] = useState(Array(9).fill(''));
+const [isX, setIsX] = useState(false);
+const [turnNumber, setTurnNumber] = useState(0);
+const [winner, setWinner] = useState(false);
 
-  const coinFlip = () => {
-    return Math.random() * 2 > 1 ? setTurn('player1') : setTurn('player2');
-  };
+const turn = (index) => {
+  let g = [...game];
+  if (!g[index] && !winner) {
+    g[index] = isX ? 'X' : 'O';
+    setGame(g);
+    setIsX(!isX);
+    setTurnNumber(turnNumber + 1);
+  }
+};
 
-  const handleStop = () => {
-    setTurn('');
-  };
+const restart = () => {
+  setGame(Array(9).fill(''));
+  setWinner(false);
+  setTurnNumber(0);
+};
 
-  const checkForWin = (squares) => {
-    let combo = {
-      across: [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-      ],
-      down: [
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-      ],
-      diagonal: [
-        [0, 4, 8],
-        [2, 4, 6],
-      ],
-    };
-    for (let comboKey in combo) {
-      combo[comboKey].forEach((pattern) => {
-        if (
-          squares[pattern[0]] === '' ||
-          squares[pattern[1]] === '' ||
-          squares[pattern[2]] === ''
-        ) {
-          // do nothing
-        } else if (
-          squares[pattern[0]] === squares[pattern[1]] &&
-          squares[pattern[1]] === squares[pattern[2]]
-        ) {
-          setWinner(turn);
-          handleStop();
-          console.log('паттерн',squares[pattern[0]], 'squares: ',squares, 'winner: ',{winner});
-        }
-      });
+useEffect(() => {
+  // check for winner for every turn
+  combinations.forEach((c) => {
+    if (game[c[0]] === game[c[1]] && game[c[0]] === game[c[2]] && game[c[0]] !== '') {
+      setWinner(true);
     }
-  };
+  });
+}, [game]);
 
-  const handleClick = (num) => {
-    if (cells[num] !== '') {
-      return;
-    }
-    let squares = [...cells];
-    if (checkForWin(squares)) { handleStop() }
-    if (turn === 'player1') {
-      squares[num] = 'X';
-      setTurn('player2');
-    } else {
-      if (turn === 'player2') {
-        squares[num] = 'O';
-        setTurn('player1');
-      } else {
-        return;
-      }
-    }
-    checkForWin(squares);
-    setCells(squares);
-  };
-
-
-
-  const handleRestart = () => {
-    setWinner(null);
-    setCells(Array(9).fill(''));
-    setTurn('');
-  };
-
-  const Cell = ({ num }) => {
-    return <li onClick={() => handleClick(num)}>{cells[num]}</li>;
-  };
-
-  return (
-    <StyledTicTakToe>
-      <div className={'start_div'}>
-        <button onClick={() => coinFlip()}>Flip the coin</button>
-      <p className={'turn'}>Turn: {turn}</p>
-      </div>
-      <ul>
-        <Cell num={0}/>
-        <Cell num={1}/>
-        <Cell num={2}/>
-        <Cell num={3}/>
-        <Cell num={4}/>
-        <Cell num={5}/>
-        <Cell num={6}/>
-        <Cell num={7}/>
-        <Cell num={8}/>
-      </ul>
-      {winner && (
-        <div className={'end_div'}>
-          <p>{winner} is a winner</p>
-          <button onClick={()=> handleRestart()}>Restart</button>
-        </div>
+return (
+  <StyledTikTakToe>
+  <div className="container">
+    <p>
+      {winner || turnNumber === 9 ? (
+        <button className="reset-btn" onClick={restart}>
+          Restart
+        </button>
+      ) : null}
+      {winner ? (
+        <span>We have a winner: {!isX ? 'X' : 'O'}</span>
+      ) : turnNumber === 9 ? (
+        <span>Round drow!</span>
+      ) : (
+        <br />
       )}
-    </StyledTicTakToe>
+    </p>
+
+    <div className="row">
+      <Box index={0} turn={turn} value={game[0]} />
+      <Box index={1} turn={turn} value={game[1]} />
+      <Box index={2} turn={turn} value={game[2]} />
+    </div>
+    <div className="row">
+      <Box index={3} turn={turn} value={game[3]} />
+      <Box index={4} turn={turn} value={game[4]} />
+      <Box index={5} turn={turn} value={game[5]} />
+    </div>
+    <div className="row">
+      <Box index={6} turn={turn} value={game[6]} />
+      <Box index={7} turn={turn} value={game[7]} />
+      <Box index={8} turn={turn} value={game[8]} />
+    </div>
+  </div>
+  </StyledTikTakToe>
+);
+}
+
+const Box = ({ index, turn, value }) => {
+  return (
+    <div className="box" onClick={() => turn(index)}>
+      {value}
+    </div>
   );
 };
 
-export default Tiktaktoe;
+const combinations = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6],
+];
+
+const random = () => {
+  return Array.from(Array(8), () => Math.floor(Math.random() * 36).toString(36)).join('');
+};
+
+export default TikTakToe;
+
+
+// function Tiktaktoe() {
+//   const [game, setGame] = useState(Array(9).fill(''));
+//   const [turnNumber, setTurnNumber] = useState(0);
+//   const [myTurn, setMyTurn] = useState(true);
+//   const [winner, setWinner] = useState(false);
+//   const [xo, setXO] = useState('X');
+//   const [player, setPlayer] = useState('');
+//   const [hasOpponent, setHasOpponent] = useState(false);
+//   const [share, setShare] = useState(false);
+//
+//   const location = useLocation();
+//   const params = new URLSearchParams(location.search);
+//   const paramsRoom = params.get('room');
+//   const [room, setRoom] = useState(paramsRoom);
+//
+//   const [turnData, setTurnData] = useState(false);
+//
+//   const sendTurn = (index) => {
+//     if (!game[index] && !winner && myTurn && hasOpponent) {
+//       socket.emit('reqTurn', JSON.stringify({ index, value: xo, room }));
+//     }
+//   };
+//
+//   const sendRestart = () => {
+//     socket.emit('reqRestart', JSON.stringify({ room }));
+//   };
+//
+//   const restart = () => {
+//     setGame(Array(9).fill(''));
+//     setWinner(false);
+//     setTurnNumber(0);
+//     setMyTurn(false);
+//   };
+//
+//   useEffect(() => {
+//     combinations.forEach((c) => {
+//       if (game[c[0]] === game[c[1]] && game[c[0]] === game[c[2]] && game[c[0]] !== '') {
+//         setWinner(true);
+//       }
+//     });
+//
+//     if (turnNumber === 0) {
+//       setMyTurn(xo === 'X' ? true : false);
+//     }
+//   }, [game, turnNumber, xo]);
+//
+//   useEffect(() => {
+//     socket.on('playerTurn', (json) => {
+//       setTurnData(json);
+//     });
+//
+//     socket.on('restart', () => {
+//       restart();
+//     });
+//
+//     socket.on('opponent_joined', () => {
+//       setHasOpponent(true);
+//       setShare(false);
+//     });
+//   }, []);
+//
+//   useEffect(() => {
+//     if (turnData) {
+//       const data = JSON.parse(turnData);
+//       let g = [...game];
+//       if (!g[data.index] && !winner) {
+//         g[data.index] = data.value;
+//         setGame(g);
+//         setTurnNumber(turnNumber + 1);
+//         setTurnData(false);
+//         setMyTurn(!myTurn);
+//         setPlayer(data.value);
+//       }
+//     }
+//   }, [turnData, game, turnNumber, winner, myTurn]);
+//
+//   useEffect(() => {
+//     if (paramsRoom) {
+//       // means you are player 2
+//       setXO('O');
+//       socket.emit('join', paramsRoom);
+//       setRoom(paramsRoom);
+//       setMyTurn(false);
+//     } else {
+//       // means you are player 1
+//       const newRoomName = random();
+//       socket.emit('create', newRoomName);
+//       setRoom(newRoomName);
+//       setMyTurn(true);
+//     }
+//   }, [paramsRoom]);
+//
+//   return (
+//     <StyledTikTakToe>
+//     <div className="container">
+//       Room: {room}
+//       <button className="btn" onClick={() => setShare(!share)}>
+//         Share
+//       </button>
+//       {share ? (
+//         <>
+//           <br />
+//           <br />
+//           Share link: <input type="text" value={`${window.location.href}?room=${room}`} readOnly />
+//         </>
+//       ) : null}
+//       <br />
+//       <br />
+//       Turn: {myTurn ? 'You' : 'Opponent'}
+//       <br />
+//       {hasOpponent ? '' : 'Waiting for opponent...'}
+//       <p>
+//         {winner || turnNumber === 9 ? (
+//           <button className="btn" onClick={sendRestart}>
+//             Restart
+//           </button>
+//         ) : null}
+//         {winner ? <span>We have a winner: {player}</span> : turnNumber === 9 ? <span>It's a tie!</span> : <br />}
+//       </p>
+//       <div className="row">
+//         <Box index={0} turn={sendTurn} value={game[0]} />
+//         <Box index={1} turn={sendTurn} value={game[1]} />
+//         <Box index={2} turn={sendTurn} value={game[2]} />
+//       </div>
+//       <div className="row">
+//         <Box index={3} turn={sendTurn} value={game[3]} />
+//         <Box index={4} turn={sendTurn} value={game[4]} />
+//         <Box index={5} turn={sendTurn} value={game[5]} />
+//       </div>
+//       <div className="row">
+//         <Box index={6} turn={sendTurn} value={game[6]} />
+//         <Box index={7} turn={sendTurn} value={game[7]} />
+//         <Box index={8} turn={sendTurn} value={game[8]} />
+//       </div>
+//     </div>
+//     </StyledTikTakToe>
+//   );
+// }

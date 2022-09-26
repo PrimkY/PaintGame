@@ -20,7 +20,7 @@ const LogIn = () => {
           id: user.uid,
           token: user.accessToken,
         }));
-        navigate('/profile');
+        navigate('/home');
       })
       .catch(() => alert('You should register first)'))
   }

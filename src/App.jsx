@@ -8,24 +8,19 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { persistor, store } from './store/initStore';
 import { PersistGate } from 'redux-persist/integration/react';
+import ThemeProvider from './provider/ThemeProvider'
 
-const StyledMainContent = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
 
 function App() {
-
 
   return (
     <React.Fragment>
       <BrowserRouter>
         <Provider store={ store }>
-          <PersistGate loading={null} persistor={persistor}>
-            <GlobalThemeWrapper>
+          <PersistGate loading={`loading...`} persistor={persistor}>
+            <ThemeProvider>
               <RootRouter/>
-            </GlobalThemeWrapper>
+            </ThemeProvider>
           </PersistGate>
         </Provider>
       </BrowserRouter>

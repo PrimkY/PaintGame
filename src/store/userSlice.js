@@ -5,7 +5,7 @@ const initialState = {
     email: null,
     id: null,
     token: null,
-    name: null
+    name: null,
 }
 
 const userSlice = createSlice({
@@ -17,7 +17,7 @@ const userSlice = createSlice({
       state.email = action.payload.email;
       state.id = action.payload.id;
       state.token = action.payload.token;
-      state.name = action.payload.token;
+      state.name = action.payload.name;
     },
     removeUser(state) {
       state.isLoggedIn = false;

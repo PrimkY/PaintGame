@@ -70,7 +70,9 @@ module.exports = ({ development }) => {
         },
         {
           test: /\.tsx?$/,
-          use: 'ts-loader',
+          use: [{
+            loader: 'babel-loader',
+          }],
           exclude: /node_modules/,
         },
       ],

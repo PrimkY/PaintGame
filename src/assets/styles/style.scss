@@ -98,7 +98,6 @@ html {
   @if $legacy_support_for_ie {
     font-size: 100%; // 1
   }
-  background: $background;
   color: $color;
   -webkit-text-size-adjust: 100%; // 2
   -ms-text-size-adjust: 100%; // 2
@@ -527,4 +526,16 @@ input {
 ul li {
   text-decoration: none;
   list-style-type: none;
+}
+
+:root[data-theme="light"] {
+  --background-color: #fafafa;
+}
+
+:root[data-theme="dark"] {
+  --background-color: #2b3e51;
+}
+
+body {
+  background: var(--background-color);
 }
